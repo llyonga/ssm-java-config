@@ -1,0 +1,409 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.io.ssm.module.domain.menu.CmMenuMapper">
+  <resultMap id="BaseResultMap" type="com.io.ssm.module.domain.menu.CmMenu">
+    <id column="MENU_ID" jdbcType="BIGINT" property="menuId" />
+    <result column="PARENT_ID" jdbcType="BIGINT" property="parentId" />
+    <result column="MENU_NAME" jdbcType="VARCHAR" property="menuName" />
+    <result column="URL" jdbcType="VARCHAR" property="url" />
+    <result column="LEVEL" jdbcType="INTEGER" property="level" />
+    <result column="ICON" jdbcType="VARCHAR" property="icon" />
+    <result column="TYPE" jdbcType="CHAR" property="type" />
+    <result column="MID" jdbcType="INTEGER" property="mid" />
+    <result column="ORDER_NUM" jdbcType="BIGINT" property="orderNum" />
+    <result column="CREATE_TIME" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="MODIFY_TIME" jdbcType="TIMESTAMP" property="modifyTime" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.io.ssm.module.domain.menu.CmMenu">
+    <result column="PERMS" jdbcType="LONGVARCHAR" property="perms" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    MENU_ID, PARENT_ID, MENU_NAME, URL, LEVEL, ICON, TYPE, MID, ORDER_NUM, CREATE_TIME, 
+    MODIFY_TIME
+  </sql>
+  <sql id="Blob_Column_List">
+    PERMS
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.io.ssm.module.domain.menu.CmMenuExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cm_menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExample" parameterType="com.io.ssm.module.domain.menu.CmMenuExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cm_menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cm_menu
+    where MENU_ID = #{menuId,jdbcType=BIGINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from cm_menu
+    where MENU_ID = #{menuId,jdbcType=BIGINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.io.ssm.module.domain.menu.CmMenuExample">
+    delete from cm_menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.io.ssm.module.domain.menu.CmMenu">
+    insert into cm_menu (MENU_ID, PARENT_ID, MENU_NAME, 
+      URL, LEVEL, ICON, TYPE, 
+      MID, ORDER_NUM, CREATE_TIME, 
+      MODIFY_TIME, PERMS)
+    values (#{menuId,jdbcType=BIGINT}, #{parentId,jdbcType=BIGINT}, #{menuName,jdbcType=VARCHAR}, 
+      #{url,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{icon,jdbcType=VARCHAR}, #{type,jdbcType=CHAR}, 
+      #{mid,jdbcType=INTEGER}, #{orderNum,jdbcType=BIGINT}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{modifyTime,jdbcType=TIMESTAMP}, #{perms,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.io.ssm.module.domain.menu.CmMenu">
+    insert into cm_menu
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="menuId != null">
+        MENU_ID,
+      </if>
+      <if test="parentId != null">
+        PARENT_ID,
+      </if>
+      <if test="menuName != null">
+        MENU_NAME,
+      </if>
+      <if test="url != null">
+        URL,
+      </if>
+      <if test="level != null">
+        LEVEL,
+      </if>
+      <if test="icon != null">
+        ICON,
+      </if>
+      <if test="type != null">
+        TYPE,
+      </if>
+      <if test="mid != null">
+        MID,
+      </if>
+      <if test="orderNum != null">
+        ORDER_NUM,
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME,
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME,
+      </if>
+      <if test="perms != null">
+        PERMS,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="menuId != null">
+        #{menuId,jdbcType=BIGINT},
+      </if>
+      <if test="parentId != null">
+        #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="menuName != null">
+        #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        #{level,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null">
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=CHAR},
+      </if>
+      <if test="mid != null">
+        #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="orderNum != null">
+        #{orderNum,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="perms != null">
+        #{perms,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.io.ssm.module.domain.menu.CmMenuExample" resultType="java.lang.Long">
+    select count(*) from cm_menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update cm_menu
+    <set>
+      <if test="record.menuId != null">
+        MENU_ID = #{record.menuId,jdbcType=BIGINT},
+      </if>
+      <if test="record.parentId != null">
+        PARENT_ID = #{record.parentId,jdbcType=BIGINT},
+      </if>
+      <if test="record.menuName != null">
+        MENU_NAME = #{record.menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.url != null">
+        URL = #{record.url,jdbcType=VARCHAR},
+      </if>
+      <if test="record.level != null">
+        LEVEL = #{record.level,jdbcType=INTEGER},
+      </if>
+      <if test="record.icon != null">
+        ICON = #{record.icon,jdbcType=VARCHAR},
+      </if>
+      <if test="record.type != null">
+        TYPE = #{record.type,jdbcType=CHAR},
+      </if>
+      <if test="record.mid != null">
+        MID = #{record.mid,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderNum != null">
+        ORDER_NUM = #{record.orderNum,jdbcType=BIGINT},
+      </if>
+      <if test="record.createTime != null">
+        CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.modifyTime != null">
+        MODIFY_TIME = #{record.modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.perms != null">
+        PERMS = #{record.perms,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update cm_menu
+    set MENU_ID = #{record.menuId,jdbcType=BIGINT},
+      PARENT_ID = #{record.parentId,jdbcType=BIGINT},
+      MENU_NAME = #{record.menuName,jdbcType=VARCHAR},
+      URL = #{record.url,jdbcType=VARCHAR},
+      LEVEL = #{record.level,jdbcType=INTEGER},
+      ICON = #{record.icon,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=CHAR},
+      MID = #{record.mid,jdbcType=INTEGER},
+      ORDER_NUM = #{record.orderNum,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=TIMESTAMP},
+      PERMS = #{record.perms,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update cm_menu
+    set MENU_ID = #{record.menuId,jdbcType=BIGINT},
+      PARENT_ID = #{record.parentId,jdbcType=BIGINT},
+      MENU_NAME = #{record.menuName,jdbcType=VARCHAR},
+      URL = #{record.url,jdbcType=VARCHAR},
+      LEVEL = #{record.level,jdbcType=INTEGER},
+      ICON = #{record.icon,jdbcType=VARCHAR},
+      TYPE = #{record.type,jdbcType=CHAR},
+      MID = #{record.mid,jdbcType=INTEGER},
+      ORDER_NUM = #{record.orderNum,jdbcType=BIGINT},
+      CREATE_TIME = #{record.createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{record.modifyTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.io.ssm.module.domain.menu.CmMenu">
+    update cm_menu
+    <set>
+      <if test="parentId != null">
+        PARENT_ID = #{parentId,jdbcType=BIGINT},
+      </if>
+      <if test="menuName != null">
+        MENU_NAME = #{menuName,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null">
+        URL = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="level != null">
+        LEVEL = #{level,jdbcType=INTEGER},
+      </if>
+      <if test="icon != null">
+        ICON = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="type != null">
+        TYPE = #{type,jdbcType=CHAR},
+      </if>
+      <if test="mid != null">
+        MID = #{mid,jdbcType=INTEGER},
+      </if>
+      <if test="orderNum != null">
+        ORDER_NUM = #{orderNum,jdbcType=BIGINT},
+      </if>
+      <if test="createTime != null">
+        CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="modifyTime != null">
+        MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="perms != null">
+        PERMS = #{perms,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where MENU_ID = #{menuId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.io.ssm.module.domain.menu.CmMenu">
+    update cm_menu
+    set PARENT_ID = #{parentId,jdbcType=BIGINT},
+      MENU_NAME = #{menuName,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      LEVEL = #{level,jdbcType=INTEGER},
+      ICON = #{icon,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=CHAR},
+      MID = #{mid,jdbcType=INTEGER},
+      ORDER_NUM = #{orderNum,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP},
+      PERMS = #{perms,jdbcType=LONGVARCHAR}
+    where MENU_ID = #{menuId,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.io.ssm.module.domain.menu.CmMenu">
+    update cm_menu
+    set PARENT_ID = #{parentId,jdbcType=BIGINT},
+      MENU_NAME = #{menuName,jdbcType=VARCHAR},
+      URL = #{url,jdbcType=VARCHAR},
+      LEVEL = #{level,jdbcType=INTEGER},
+      ICON = #{icon,jdbcType=VARCHAR},
+      TYPE = #{type,jdbcType=CHAR},
+      MID = #{mid,jdbcType=INTEGER},
+      ORDER_NUM = #{orderNum,jdbcType=BIGINT},
+      CREATE_TIME = #{createTime,jdbcType=TIMESTAMP},
+      MODIFY_TIME = #{modifyTime,jdbcType=TIMESTAMP}
+    where MENU_ID = #{menuId,jdbcType=BIGINT}
+  </update>
+  <select id="selectByExampleWithBLOBsWithRowbounds" parameterType="com.io.ssm.module.domain.menu.CmMenuExample" resultMap="ResultMapWithBLOBs">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from cm_menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByExampleWithRowbounds" parameterType="com.io.ssm.module.domain.menu.CmMenuExample" resultMap="BaseResultMap">
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    'true' as QUERYID,
+    <include refid="Base_Column_List" />
+    from cm_menu
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,67 @@
+<div class="panel-body">
+                                <table id="table1"
+                                       >
+                                       <!--data-toggle="table"-->
+                                       <!--data-url="/user/getList"-->
+                                       <!--data-height="400"-->
+                                       <!--data-side-pagination="server"-->
+                                       <!--data-pagination="true"-->
+                                       <!--data-page-list="[5, 10, 20, 50, 100, 200]"-->
+                                       <!--data-search="true"-->
+                                    <!--<thead>-->
+                                        <!--<tr>-->
+                                            <!--<th data-field="userId">用户ID</th>-->
+                                            <!--<th data-field="username">用户名</th>-->
+                                            <!--<th data-field="password">密码</th>-->
+                                            <!--<th data-field="deptId">部门ID</th>-->
+                                            <!--<th data-field="email">邮箱</th>-->
+                                            <!--<th data-field="mobile">联系电话</th>-->
+                                            <!--<th data-field="status">状态</th>-->
+                                            <!--<th data-field="crateTime">创建时间</th>-->
+                                            <!--<th data-field="modifyTime">修改时间</th>-->
+                                            <!--<th data-field="ssex">性别</th>-->
+                                            <!--<th data-field="lastLoginTime">最近访问时间</th>-->
+                                            <!--<th data-field="theme">主题</th>-->
+                                            <!--<th data-field="avatar">头像</th>-->
+                                            <!--<th data-field="description">描述</th>-->
+                                        <!--</tr>-->
+                                    <!--</thead>-->
+                                </table>
+
+
+
+
+
+
+{
+            field: 'description',
+            title: '描述',
+            align: 'center',
+            valign: 'middle'
+        },{
+            field: 'operate',
+            title: '操作',
+            align: 'center',
+            width : 100,
+            events: operateEvents,
+            formatter: operateFormatter
+        }]
+
+function operateFormatter(value, row, index) {
+    return [
+        '<button type="button" class="RoleOfdelete btn btn-primary  btn-sm" style="margin-right:15px;">删除</button>',
+
+        '<button type="button" class="RoleOfedit btn btn-primary  btn-sm" style="margin-right:15px;">修改</button>'
+    ].join('');
+}
+
+
+window.operateEvents = {
+    // 'click .RoleOfdelete': function (e, value, row, index) {
+    //     alert(row.dno);
+    // },
+    // 'click .RoleOfedit': function (e, value, row, index) {
+    //     $("#editModal").modal('show');
+    //
+    // }
+}
